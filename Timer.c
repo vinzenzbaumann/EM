@@ -2,7 +2,7 @@
 
 volatile TimerType timers[5];
 
-void setTimer(uint8_t timer_index, int time,void (*cb)())
+void setTimer(uint8_t timer_index,uint32_t time,void (*cb)())
 {
 	timers[timer_index].start = 0;
 	timers[timer_index].duration = time;

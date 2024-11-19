@@ -16,7 +16,7 @@ typedef struct TimerType
 
 
 
-void setTimer(uint8_t timer_index, int time, void (*cb)());
+void setTimer(uint8_t timer_index, uint32_t time, void (*cb)());
 
 void startTimer(uint8_t timer_index, uint16_t currentTime);
 

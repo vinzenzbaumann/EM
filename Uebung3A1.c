@@ -7,6 +7,8 @@
 
 #define EVENT_TIMER1SEC 0x01
 #define EVENT_TIMER50MS 0x02
+#define TIME_1000000
+
 #define F_CPU 16000000UL
 #include <avr/io.h>
 #include <util/delay.h>
@@ -20,14 +22,9 @@ volatile uint8_t PIND2_prev=1, PINC0_prev=1, PIND2_curr=0, PINC0_curr=0, counter
 
 ISR(TIMER1_OVF_vect){
 	static uint16_t timercount = 0;
-	TCNT1 = 65536-20000;
+	TCNT1 = 65536-200;
 	timercount++;
-
-	if ((timercount%50)==0){
-		
 		timerCheck(timercount);
-
-	}
 }
 
 //timer1 16 bit timer usen
@@ -136,7 +133,7 @@ int main(void)
 	//timer config
 	TCNT1 = 65536-200;                             
 	TCCR1B &= ~((1<<CS12)|(1<<CS11)|(1<<CS10));  // Löscht alle Prescaler-Bits für Timer 1
-	TCCR1B |= (1<<CS10);          // Setzt den Prescaler auf 64 für Timer 1
+	TCCR1B |= (1<<CS11);          // Setzt den Prescaler auf 64 für Timer 1
 	TIMSK1 |= (1<<TOIE1);                   // Aktiviert den Overflow-Interrupt für Timer 1
 
 	// Pullups
@@ -146,8 +143,8 @@ int main(void)
 	
 
 	
-	setTimer(0,1000,Countdown);
-	setTimer(1,50,tasterAbfrage);
+	setTimer(0,1000000,Countdown);
+	setTimer(1,50000,tasterAbfrage);
 	startTimer(0,0);
 	startTimer(1,0);
 
