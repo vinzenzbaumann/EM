@@ -21,8 +21,8 @@ volatile uint8_t start_detected = 0, reset_detected = 0, overflow_detected = 0;
 volatile uint8_t PIND2_prev=1, PINC0_prev=1, PIND2_curr=0, PINC0_curr=0, counter = 1;
 
 ISR(TIMER1_OVF_vect){
-	static uint16_t timercount = 0;
-	TCNT1 = 65536-200;
+	static uint32_t timercount = 0;
+	TCNT1 = 65334;// 65536-2;
 	timercount++;
 		timerCheck(timercount);
 }
@@ -131,7 +131,7 @@ int main(void)
 	DDRB|=(1<<PORTB0);
 
 	//timer config
-	TCNT1 = 65536-200;                             
+	TCNT1 = 65334;//65536-2;                             
 	TCCR1B &= ~((1<<CS12)|(1<<CS11)|(1<<CS10));  // Löscht alle Prescaler-Bits für Timer 1
 	TCCR1B |= (1<<CS11);          // Setzt den Prescaler auf 64 für Timer 1
 	TIMSK1 |= (1<<TOIE1);                   // Aktiviert den Overflow-Interrupt für Timer 1
@@ -143,8 +143,8 @@ int main(void)
 	
 
 	
-	setTimer(0,1000000,Countdown);
-	setTimer(1,50000,tasterAbfrage);
+	setTimer(0,10000,Countdown);
+	setTimer(1,500,tasterAbfrage);
 	startTimer(0,0);
 	startTimer(1,0);
 

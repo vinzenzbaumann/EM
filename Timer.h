@@ -8,20 +8,20 @@
 typedef struct TimerType
 {
 	bool start;
-	int passedTime;
-	int duration;
+	uint32_t passedTime;
+	uint32_t duration;
 	void (*callback)();
-	uint16_t startingTime;
+	uint32_t startingTime;
 } TimerType;
 
 
 
 void setTimer(uint8_t timer_index, uint32_t time, void (*cb)());
 
-void startTimer(uint8_t timer_index, uint16_t currentTime);
+void startTimer(uint8_t timer_index, uint32_t currentTime);
 
 void cancelTimer(uint8_t timer_index);
 
-void timerCheck(uint16_t currentTime);
+void timerCheck(uint32_t currentTime);
 
 #endif /* TIMER_H_INCLUDED */
